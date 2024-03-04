@@ -10,6 +10,7 @@ pipeline {
         ROBOT_GIT = "https://github.com/phattharaphorn/softdev-robot.git"
     }
 
+
     stages {
         stage("clear containers and images if exist") {
             agent any
@@ -96,6 +97,7 @@ pipeline {
             agent { label 'test' }
             steps {
                 echo 'Logining in...'
+                sh 'docker stop $(docker ps -a -q)'
                 withCredentials([
                     usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
                 ]) {
